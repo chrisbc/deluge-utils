@@ -7,32 +7,32 @@ from deluge_card import DelugeCardFS
 from deluge_card.deluge_card import InvalidDelugeCard, list_deluge_fs
 
 def list_songs(card, args):
-	cs = list(card.songs())
+	songs = list(card.songs())
 	if args.summary | args.verbose:
-		print(f'Deluge filesystem {card} has {len(cs)} songs')	
+		print(f'Deluge filesystem {card} has {len(songs)} songs')	
 	if args.summary:
 		return	
-	for s in cs:
-		print(f'  song: {s} key {s.scale()}')			
+	for s in songs:
+		print(f'  {s} key {s.scale()} tempo {s.tempo()}')			
 
 def list_samples(card, args):
-	cs = list(card.samples())
+	all_samples = list(card.samples())
 	if args.summary | args.verbose:	
-		print(f'Deluge filesystem {card} has {len(cs)} samples')
+		print(f'Deluge filesystem {card} has {len(all_samples)} samples')
 	if args.summary:
 		return		
-	for sa in cs:
-		print(f'  samp: {sa.path()}')
+	for sa in all_samples:
+		print(f'  {sa}')
 
 def list_song_samples(card, args):
-	cs = list(card.songs())
-	for s in cs:
+	song_samples = list(card.songs())
+	for s in song_samples:
 		if args.summary | args.verbose:
-			print(f'  song: {s} has {len(list(s.samples()))} samples')
-		if args.summary:
+			print(f'{s} has {len(list(s.samples()))} samples')
+		if args.summary: 
 			continue
 		for sa in s.samples():
-			print(f'  samp: {sa.path()} settings: {sa.settings()}')
+			print(f'  {str(sa)} => {sa.settings()}')
 
 if __name__ == '__main__':
 	#print('dc_manifest')
